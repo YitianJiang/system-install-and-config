@@ -1,8 +1,7 @@
 #!/bin/sh
-yum install -y vim
-yum install -y yum-utils device-mapper-persistent-data lvm2
+yum -y install yum-utils device-mapper-persistent-data lvm2
 yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
-yum install -y --setopt=obsoletes=0 \
+yum -y --setopt=obsoletes=0 install \
    docker-ce-17.03.2.ce-1.el7.centos.x86_64 \
    docker-ce-selinux-17.03.2.ce-1.el7.centos.noarch
 docker --version
