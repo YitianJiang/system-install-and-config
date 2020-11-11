@@ -7,7 +7,7 @@ yum install -y --setopt=obsoletes=0 \
    docker-ce-selinux-17.03.2.ce-1.el7.centos.noarch
 docker --version
 systemctl start docker
-sleep 2
+sleep 3
 touch /etc/docker/daemon.json
 cat << EOF >/etc/docker/daemon.json
 {
