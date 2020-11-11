@@ -6,6 +6,8 @@ yum install -y --setopt=obsoletes=0 \
    docker-ce-17.03.2.ce-1.el7.centos.x86_64 \
    docker-ce-selinux-17.03.2.ce-1.el7.centos.noarch
 docker --version
+systemctl start docker
+sleep 2
 touch /etc/docker/daemon.json
 cat << EOF >/etc/docker/daemon.json
 {
@@ -17,6 +19,6 @@ cat << EOF >/etc/docker/daemon.json
 }
 EOF
 systemctl daemon-reload
-systemctl start docker
+systemctl restart docker
 systemctl enable docker
 docker info |grep Storage
