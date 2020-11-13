@@ -1,9 +1,11 @@
 - name: copy sshtrust to nodes
   copy:
     src: /root/system-install-and-config/sshtrust  
-    dest: /root/sshtrust
+    dest: /root
     mode: preserve
 
-- name: execute sshtrust-mutual.sh
-  shell: bash /root/sshtrust/sshtrust-mutual.sh
+- name: execute sshtrust.sh
+  shell: 
+    cmd: bash sshtrust.sh
+    chdir: /root/sshtrust
     
