@@ -2,4 +2,4 @@
   hosts: mysql
   remote_user: root
   roles:
-    - {role: sshtrust, tags: sshtrust}
+    - role: sshtrust
