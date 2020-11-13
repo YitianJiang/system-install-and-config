@@ -1,0 +1,5 @@
+- name: start
+  hosts: mysql
+  remote_user: root
+  roles:
+    - sshtrust
