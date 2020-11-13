@@ -4,6 +4,7 @@
     dest: /root
     mode: preserve
 
+#when red "All keys were skipped because they already exist on the remote system." appear,it's also ok.
 - name: execute sshtrust.sh
   shell: 
     cmd: bash sshtrust.sh
