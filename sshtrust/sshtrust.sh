@@ -3,7 +3,7 @@
 if [[ `expect --version 2>&1 | grep "command not found" | wc -l` -eq 1 ]]; then 
 	yum install -y expect
 fi
-if [[ `cd ~/.ssh && ls | grep id_rsa.pub | wc -l` -eq 0 ]]; thenssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
+if [[ `cd ~/.ssh && ls | grep id_rsa.pub | wc -l` -eq 0 ]]; then
 	ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
 fi
 user=root
