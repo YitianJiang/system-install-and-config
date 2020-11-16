@@ -1,0 +1,20 @@
+- name: test1
+  remote_user: root
+  hosts: k8s-master
+  tasks:
+    - name: test11
+      copy:
+        src: /root/test1
+        dest: /root
+        mode: preserve
+
+- name: test2
+  remote_user: root
+  hosts: k8s-slave
+  tasks:
+    - name: test22
+      copy:
+        src: /root/test2
+        dest: /root
+        mode: preserve
+  
