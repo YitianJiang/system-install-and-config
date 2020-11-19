@@ -2,7 +2,7 @@
 TYPE=Ethernet
 PROXY_METHOD=none
 BROWSER_ONLY=no
-BOOTPROTO=static
+BOOTPROTO=static    ---------------need to revise
 DEFROUTE=yes
 IPV4_FAILURE_FATAL=no
 IPV6INIT=yes
@@ -13,12 +13,13 @@ IPV6_ADDR_GEN_MODE=stable-privacy
 NAME=enp0s3
 UUID=9477192f-5c68-45ea-92bf-1ed967998612
 DEVICE=enp0s3
-ONBOOT=yes
-IPADDR=192.168.1.200
-NETMASK=255.255.255.0
-GATEWAY=192.168.1.1
-DNS1=119.29.29.29
-DNS2=8.8.8.8
+ONBOOT=yes    ---------------need to revise ,or the ip config will not take effect 
+######################## the below need to add ############
+#IPADDR=192.168.1.200
+#NETMASK=255.255.255.0
+#GATEWAY=192.168.1.1
+#DNS1=119.29.29.29
+#DNS2=8.8.8.8
 
 systemctl restart network
 
