@@ -18,3 +18,12 @@
         dest: /root
         mode: preserve
   
+- name: test3
+  remote_user: root
+  hosts: k8s
+  tasks:
+    - name: test33
+      copy:
+        src: /root/test3
+        dest: /root
+        mode: preserve

@@ -1,0 +1,27 @@
+- name: install rabbitmq cluster
+  remote_user: root
+  hosts: rabbitmq
+  tasks:
+    - name: copy rabbit directory to rabbitmq nodes
+      copy:
+        src: /root/system-install-and-config/rabbitmq
+        dest: /root/system-install-and-config
+        mode: preserve
+    
+    - name: execute rabbitmq-master-install.sh in master node
+      shell:
+        cmd: bash rabbitmq-master-install.sh
+        chdir: /root/system-install-and-config/rabbitmq
+      delegate_to: rabbitmq-master
+      run_once: true
+    
+    - name: execute rabbitmq-slave-install.sh in slave nodes
+      shell:
+        cmd: bash rabbitmq-slave-install.sh
+        chdir: /root/system-install-and-config/rabbitmq
+      delegate_to: rabbitmq-slave
+      run_once: true
+
+    
+
+

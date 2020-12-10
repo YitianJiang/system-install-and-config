@@ -1,0 +1,39 @@
+- name: copy sshtrust to nodes
+  copy:
+    src: /root/system-install-and-config/sshtrust  
+    dest: /root
+    mode: preserve
+  tags:
+    - normal
+
+#when red "All keys were skipped because they already exist on the remote system." appear,it's also ok.
+- name: execute sshtrust.sh
+  shell: 
+    cmd: bash sshtrust.sh -n
+    chdir: /root/sshtrust
+  tags:
+    - normal
+
+- name: add new node trust
+  shell:
+    cmd: bash sshtrust.sh -a {{newnode_ip}}
+    chdir: /root/sshtrust
+  tags:
+    - add
+
+- name: copy sshtrust to new node
+  copy:
+    src: /root/system-install-and-config/sshtrust
+    dest: /root
+    mode: preserve 
+  delegate_to: "{{ newnode_ip }}"
+  tags:
+    - add
+
+- name: new node copy public key to other nodes
+  shell:
+    cmd: bash sshtrust.sh -n
+    chdir: /root/sshtrust
+  delegate_to: "{{ newnode_ip }}"
+  tags:
+    - add
