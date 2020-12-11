@@ -27,3 +27,29 @@
         src: /root/test3
         dest: /root
         mode: preserve
+
+- name: test4
+  remote_user: root
+  hosts: mysql
+  tasks:
+    - name: test44
+      shell:
+        cmd: echo jiangyitian >> /root/test4
+      delegate_to: localhost
+      run_once: true
+      tags:
+        - test4
+
+- name: test5
+  remote_user: root
+  hosts: mysql
+  tasks:
+    - name: test55
+      shell:
+        cmd: echo "{{ item }}" >> /root/test5
+      delegate_to: "{{ item }}"
+      run_once: true
+      with_items: "{{ groups.mysql }}" 
+      tags:
+        - test5
+  

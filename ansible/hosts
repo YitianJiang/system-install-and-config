@@ -48,13 +48,13 @@
 192.168.1.203
 
 [rabbitmq:children]
-rabbitmq-master
-rabbitmq-slave
+rabbitmq_master
+rabbitmq_slave
 
-[rabbitmq-master]
+[rabbitmq_master]
 192.168.1.200  ansible_user=root
 
-[rabbitmq-slave]
+[rabbitmq_slave]
 192.168.1.201  ansible_user=root
 192.168.1.202  ansible_user=root
 192.168.1.203  ansible_user=root

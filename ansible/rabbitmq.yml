@@ -13,17 +13,16 @@
         cmd: bash rabbitmq-master-install.sh
         chdir: /root/system-install-and-config/rabbitmq
       delegate_to: "{{ item }}"
-      with_item: "{{ groups.rabbitmq-master }}"
       run_once: true
+      with_items: "{{ groups.rabbitmq_master }}"
     
     - name: execute rabbitmq-slave-install.sh in slave nodes
       shell:
         cmd: bash rabbitmq-slave-install.sh
         chdir: /root/system-install-and-config/rabbitmq
       delegate_to: "{{ item }}"
-      with_item: "{{ groups.rabbitmq-slave }}"
       run_once: true
+      with_items: "{{ groups.rabbitmq_slave }}"
 
-    
 
 
