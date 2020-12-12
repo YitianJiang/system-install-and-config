@@ -1,10 +1,41 @@
 #!/bin/bash
-yum install -y epel-release
-yum install -y rabbitmq-server
-nohup /usr/lib/rabbitmq/bin/rabbitmq-server &
-scp /var/lib/rabbitmq/.erlang.cookie root@192.168.1.201:/var/lib/rabbitmq/.erlang.cookie
-scp /var/lib/rabbitmq/.erlang.cookie root@192.168.1.202:/var/lib/rabbitmq/.erlang.cookie
-scp /var/lib/rabbitmq/.erlang.cookie root@192.168.1.203:/var/lib/rabbitmq/.erlang.cookie
+
+#1.add host ip:hostname mappings to /etc/hosts
+if [[ $(grep "192.168.1.200 k8s-master" /etc/hosts) == "" ]]; then
+  sed -i '$a 192.168.1.200 k8s-master' /etc/hosts
+fi
+
+if [[ $(grep "192.168.1.201 k8s-slave1" /etc/hosts) == "" ]]; then
+  sed -i '$a 192.168.1.201 k8s-slave1' /etc/hosts
+fi
+
+if [[ $(grep "192.168.1.202 k8s-slave2" /etc/hosts) == "" ]]; then
+  sed -i '$a 192.168.1.202 k8s-slave2' /etc/hosts
+fi
+
+#2.open ports
+firewall-cmd --zone=public --permanent --add-port=4369/tcp
+firewall-cmd --zone=public --permanent --add-port=5672/tcp
+firewall-cmd --zone=public --permanent --add-port=15672/tcp
+firewall-cmd --zone=public --permanent --add-port=25672/tcp
+firewall-cmd --reload
+
+#3.yum install rabbitmq-serveri ,it may be too slow.
+yum install -y epel-release rabbitmq-server
+
+#4.open plugin
 /usr/lib/rabbitmq/bin/rabbitmq-plugins enable rabbitmq_management
 
+#5.start one node
+#configure the two .erlang.cookie in the node to be consistent(the one subject to another in /root)
+#copy .erlang.cookie to other nodes
+\cp -f /root/.erlang.cookie /var/lib/rabbitmq/.erlang.cookie
+chown rabbitmq:rabbitmq /var/lib/rabbitmq/.erlang.cookie
+/usr/lib/rabbitmq/bin/rabbitmq-server -detached
+
+#6.configure auto start
+sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
+sed -i 's/User=rabbitmq/User=root/g' /usr/lib/systemd/system/rabbitmq-server.service
+sed -i 's/Group=rabbitmq/Group=root/g' /usr/lib/systemd/system/rabbitmq-server.service
+systemctl enable rabbitmq-server
 
