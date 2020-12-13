@@ -58,6 +58,14 @@ rabbitmq_slave
 192.168.1.201  ansible_user=root
 192.168.1.202  ansible_user=root
 
+[haproxy]
+192.168.1.200
+192.168.1.201
+
+[keepalived]
+192.168.1.200
+192.168.1.201
+
 [k8s:children]
 k8s-master
 k8s-slave

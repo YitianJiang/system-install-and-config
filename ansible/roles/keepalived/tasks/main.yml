@@ -1,0 +1,23 @@
+- name: copy sshtrust to nodes
+  copy:
+    src: /root/system-install-and-config/rabbitmq/keepalived-install 
+    dest: /root/system-install-and-config/rabbitmq
+    mode: preserve
+  tags:
+    - normal
+
+- name: execute keepalived-install.sh
+  shell: 
+    cmd: bash keepalived-install.sh
+    chdir: /root/system-install-and-config/rabbitmq/keepalived-install
+
+- name: copy keepalived.conf.j2 to nodes
+  template:
+    src: keepalived.conf.j2
+    dest: /etc/keepalived
+
+- name: start keepalived
+  service:
+    name: keepalived
+    state: started
+

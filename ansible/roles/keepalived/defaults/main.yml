@@ -1,0 +1,2 @@
+keepalived_master_ip: "192.168.1.200"
+keepalived_backup_ip: "192.168.1.201"

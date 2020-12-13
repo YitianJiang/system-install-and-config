@@ -1,0 +1,9 @@
+#!/bin/bash
+if [ $(ps -C haproxy --no-header | wc -l) -eq 0 ];then
+        haproxy -f /opt/haproxy-1.7.8/haproxy.cfg
+fi
+sleep 2
+if [ $(ps -C haproxy --no-header | wc -l) -eq 0 ];then
+        service keepalived stop
+fi
+

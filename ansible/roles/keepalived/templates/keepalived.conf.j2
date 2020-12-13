@@ -1,0 +1,42 @@
+#Keepalived配置文件
+global_defs {
+        {% if ansible_default_ipv4.address == keepalived_master_ip %}
+        router_id NodeA                 #路由ID, 主备的ID不能相同
+        {% elif ansible_default_ipv4.address == keepalived_backup_ip %}
+        router_id NodeB                 #路由ID, 主备的ID不能相同
+        {% endif %}
+}
+
+#自定义监控脚本
+vrrp_script chk_haproxy {
+        script "/etc/keepalived/check_haproxy.sh"
+        interval 5
+        weight 2
+}
+
+vrrp_instance VI_1 {
+        {% if ansible_default_ipv4.address == keepalived_master_ip %}
+        state MASTER #Keepalived的角色。Master表示主服务器，从服务器设置为BACKUP
+        {% elif ansible_default_ipv4.address == keepalived_backup_ip %}
+        state BACKUP #Keepalived的角色。Master表示主服务器，从服务器设置为BACKUP
+        {% endif %}
+        interface enp0s3          #指定监测网卡
+        virtual_router_id 1
+        {% if ansible_default_ipv4.address == keepalived_master_ip %}
+        priority 100            #优先级，BACKUP机器上的优先级要小于这个值
+        {% elif ansible_default_ipv4.address == keepalived_backup_ip %}
+        priority 50            #优先级，BACKUP机器上的优先级要小于这个值
+        {% endif %}
+        advert_int 1            #设置主备之间的检查时间，单位为s
+        authentication {        #定义验证类型和密码
+                auth_type PASS
+                auth_pass 123456
+        }
+        track_script {
+                chk_haproxy
+        }
+        virtual_ipaddress {     #VIP地址，可以设置多个：
+                192.168.1.220
+        }
+}
+
