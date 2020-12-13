@@ -57,7 +57,6 @@ rabbitmq_slave
 [rabbitmq_slave]
 192.168.1.201  ansible_user=root
 192.168.1.202  ansible_user=root
-192.168.1.203  ansible_user=root
 
 [k8s:children]
 k8s-master
