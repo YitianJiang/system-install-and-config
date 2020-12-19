@@ -20,8 +20,8 @@
 ## [webservers]
 ## alpha.example.org
 ## beta.example.org
-## 192.168.1.100
-## 192.168.1.110
+## 10.0.0.100
+## 10.0.0.110
 
 # If you have multiple hosts following a pattern you can specify
 # them like this:
@@ -42,43 +42,43 @@
 
 ## db-[99:101]-node.example.com
 [mysql]
-192.168.1.200
-192.168.1.201
-192.168.1.202
-192.168.1.203
+10.0.0.200
+10.0.0.201
+10.0.0.202
+10.0.0.203
 
 [rabbitmq:children]
 rabbitmq_master
 rabbitmq_slave
 
 [rabbitmq_master]
-192.168.1.200  ansible_user=root
+10.0.0.200  ansible_user=root
 
 [rabbitmq_slave]
-192.168.1.201  ansible_user=root
-192.168.1.202  ansible_user=root
+10.0.0.201  ansible_user=root
+10.0.0.202  ansible_user=root
 
 [haproxy]
-192.168.1.200
-192.168.1.201
+10.0.0.200
+10.0.0.201
 
 [keepalived]
-192.168.1.200
-192.168.1.201
+10.0.0.200
+10.0.0.201
 
 [rancher]
-192.168.1.198
+10.0.0.198
 
 [k8s:children]
 k8s-master
 k8s-slave
 
 [k8s-master]
-192.168.1.199
-192.168.1.200
+10.0.0.199
+10.0.0.200
 
 [k8s-slave]
-192.168.1.201
-192.168.1.202
-192.168.1.203
+10.0.0.201
+10.0.0.202
+10.0.0.203
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 mkdir -p /opt/hadoop && cd /opt/hadoop
-scp root@192.168.1.190:/root/big-data/hadoop-2.7.6.tar.gz .
+scp root@10.0.0.190:/root/big-data/hadoop-2.7.6.tar.gz .
 tar -zxvf hadoop-2.9.2.tar.gz
 mkdir -p /root/hadoop \
 /root/hadoop/tmp \

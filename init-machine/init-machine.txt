@@ -15,9 +15,9 @@ UUID=9477192f-5c68-45ea-92bf-1ed967998612
 DEVICE=enp0s3
 ONBOOT=yes    ---------------need to revise ,or the ip config will not take effect 
 ######################## the below need to add ############
-#IPADDR=192.168.1.200
+#IPADDR=10.0.0.200
 #NETMASK=255.255.255.0
-#GATEWAY=192.168.1.1
+#GATEWAY=10.0.0.1
 #DNS1=119.29.29.29
 #DNS2=8.8.8.8
 

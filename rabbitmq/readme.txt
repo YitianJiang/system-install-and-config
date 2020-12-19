@@ -1,12 +1,12 @@
 three peer rabbitmq nodes
-192.168.1.200 
-192.168.1.201
-192.168.1.202 
+10.0.0.200 
+10.0.0.201
+10.0.0.202 
 
 two peer haproxy nodes
-192.168.1.200
-192.168.1.201
+10.0.0.200
+10.0.0.201
 
 two keepalived nodes
-192.168.1.200 master
-192.168.1.201 backup
+10.0.0.200 master
+10.0.0.201 backup

@@ -1,16 +1,16 @@
 #!/bin/bash
 
 #1.add host ip:hostname mappings to /etc/hosts
-if [[ $(grep "192.168.1.200 k8s-master" /etc/hosts) == "" ]]; then
-  sed -i '$a 192.168.1.200 k8s-master' /etc/hosts
+if [[ $(grep "10.0.0.200 k8s-master" /etc/hosts) == "" ]]; then
+  sed -i '$a 10.0.0.200 k8s-master' /etc/hosts
 fi 
 
-if [[ $(grep "192.168.1.201 k8s-slave1" /etc/hosts) == "" ]]; then
-  sed -i '$a 192.168.1.201 k8s-slave1' /etc/hosts
+if [[ $(grep "10.0.0.201 k8s-slave1" /etc/hosts) == "" ]]; then
+  sed -i '$a 10.0.0.201 k8s-slave1' /etc/hosts
 fi
  
-if [[ $(grep "192.168.1.202 k8s-slave2" /etc/hosts) == "" ]]; then
-  sed -i '$a 192.168.1.202 k8s-slave2' /etc/hosts
+if [[ $(grep "10.0.0.202 k8s-slave2" /etc/hosts) == "" ]]; then
+  sed -i '$a 10.0.0.202 k8s-slave2' /etc/hosts
 fi
  
 #2.open ports
@@ -29,7 +29,7 @@ yum install -y epel-release rabbitmq-server
 #5.start one node
 #configure the two .erlang.cookie in the node to be consistent(the one subject to another in /root)
 #copy .erlang.cookie to other nodes
-scp root@192.168.1.200:/root/.erlang.cookie /root/.erlang.cookie
+scp root@10.0.0.200:/root/.erlang.cookie /root/.erlang.cookie
 \cp -f /root/.erlang.cookie /var/lib/rabbitmq/.erlang.cookie 
 chown rabbitmq:rabbitmq /var/lib/rabbitmq/.erlang.cookie
 /usr/lib/rabbitmq/bin/rabbitmq-server -detached
