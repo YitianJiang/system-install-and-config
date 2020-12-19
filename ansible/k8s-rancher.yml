@@ -1,0 +1,56 @@
+- name: copy k8s-install directory and docker-install.sh to k8s nodes 
+  remote_user: root
+  hosts: k8s
+  tasks:
+    - name: copy k8s-install directory to k8s nodes
+      copy:
+        src: /root/system-install-and-config/k8s-install
+        dest: /root/system-install-and-config
+        mode: preserve
+
+    - name: copy docker-install.sh to k8s nodes
+      copy:
+        src: /root/system-install-and-config/docker-install.sh
+        dest: /root/system-install-and-config
+        mode: preserve
+    
+- name: excute config-k8s-master-env.sh 
+  remote_user: root
+  hosts: k8s-master
+  tasks:
+    - name: excute config-k8s-master-env.sh
+      shell:
+        cmd: bash config-k8s-master-env.sh
+        chdir: /root/system-install-and-config/k8s-install/k8s-install-rancher
+
+- name: excute config-k8s-slave-env.sh 
+  remote_user: root
+  hosts: k8s-slave
+  tasks:
+    - name: excute config-k8s-slave-env.sh
+      shell:
+        cmd: bash config-k8s-slave-env.sh
+        chdir: /root/system-install-and-config/k8s-install/k8s-install-rancher
+
+- name: configure rancher node
+  remote_user: root
+  hosts: rancher
+  tasks:
+    - name: copy k8s-install directory to rancher node
+      copy:
+        src: /root/system-install-and-config/k8s-install
+        dest: /root/system-install-and-config
+        mode: preserve
+
+    - name: copy docker-install.sh to rancher node
+      copy:
+        src: /root/system-install-and-config/docker-install.sh
+        dest: /root/system-install-and-config
+        mode: preserve
+
+    - name: configure rancher node
+      shell:
+        cmd: bash install-and-excute-rancher.sh
+        chdir: /root/system-install-and-config/k8s-install/k8s-install-rancher
+
+    
