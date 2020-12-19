@@ -16,8 +16,8 @@ sed -ri 's/.*swap.*/#&/' /etc/fstab
 if [[ `chronyd --version 2>&1 | grep "command not found" | wc -l` -eq 1 ]]; then
         yum install -y chrony
 fi
-masterip=192.168.1.200
-cluster_network=192.168.1.0/24
+masterip=10.0.0.200
+cluster_network=10.0.0.0/24
 sed -i "7i server  $masterip iburst\nallow $cluster_network" /etc/chrony.conf
 systemctl start chronyd
 systemctl enable chronyd
