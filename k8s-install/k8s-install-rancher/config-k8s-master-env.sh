@@ -34,5 +34,12 @@ if [ ! -d "/root/.kube" ]; then
 fi
 touch ~/.kube/config
 
+#6.install kubectl autocompelete tool
+#yum install bash-completion -y
+#source /usr/share/bash-completion/bash_completion
+#source <(kubectl completion bash) # 在 bash 中设置当前 shell 的自动补全，要先安装 bash-completion 包。
+#if [[ $(grep "source \<\(kubectl completion bash\)" ~/.bashrc) == "" ]]; then
+#  sed -i '$a source <(kubectl completion bash)' ~/.bashrc
+#fi
 
  
