@@ -1,0 +1,31 @@
+#- name: scl enable devtoolset-9 bash 
+#  hosts: redis
+#  tasks:
+#    - include_tasks: scl.yml
+#
+- name: configure the master redis server
+  hosts: redis-master
+  roles:
+    - redis
+
+- name: configure redis slaves
+  hosts: 10.0.0.201
+  vars:
+    - redis_slaveof: 10.0.0.198 6379
+  roles:
+    - redis
+
+- name: configure redis slaves
+  hosts: 10.0.0.202
+  vars:
+    - redis_slaveof: 10.0.0.199 6379
+  roles:
+    - redis
+
+- name: configure redis slaves
+  hosts: 10.0.0.203
+  vars:
+    - redis_slaveof: 10.0.0.200 6379
+  roles:
+    - redis
+

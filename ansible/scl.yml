@@ -1,0 +1,11 @@
+- name: install addtional centos-release-scl  when redis version is 6.0.3
+  shell: yum install -y centos-release-scl
+  when: ansible_os_family == "RedHat"
+
+- name: install addtional devtoolset-9-gcc devtoolset-9-gcc-c++ devtoolset-9-binutils tcl  when redis version is 6.0.3
+  shell: yum install -y devtoolset-9-gcc devtoolset-9-gcc-c++ devtoolset-9-binutils tcl
+  when: ansible_os_family == "RedHat"
+
+- name: enable devtoolset-9
+  shell: grep "source /opt/rh/devtoolset-9/enable" /etc/profile || echo "source /opt/rh/devtoolset-9/enable" >>/etc/profile && source /etc/profile
+  when: ansible_os_family == "RedHat"
