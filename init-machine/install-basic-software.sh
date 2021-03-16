@@ -1,2 +1,2 @@
 #!/bin/bash
-yum install -y vim net-tools epel-release
+yum install -y vim net-tools epel-release git
