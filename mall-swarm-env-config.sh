@@ -67,7 +67,7 @@ cp /root/mall-swarm/document/sql/mall.sql /mydata/mall.sql
 docker cp /mydata/mall.sql mysql:/
 ConfigMysql(){
 sleep 10
-docker exec -i mysql /bin/bash << EOF 2>&1 | grep ERROR
+docker exec -i mysql /bin/bash << EOF  2>| grep ERROR
 #连接到mysql服务
 mysql -uroot -proot --default-character-set=utf8 << END
 #创建远程访问用户
@@ -131,11 +131,11 @@ do
 done
 
 #pull images and run app
-docker pull macrodocker/mall-gateway:1.0-SNAPSHOT
-docker pull macrodocker/mall-auth:1.0-SNAPSHOT
-docker pull macrodocker/mall-monitor:1.0-SNAPSHOT
-docker pull macrodocker/mall-admin:1.0-SNAPSHOT
-docker pull macrodocker/mall-portal:1.0-SNAPSHOT
-docker pull macrodocker/mall-search:1.0-SNAPSHOT
+docker pull 2138127826/mall-gateway:1.0-SNAPSHOT
+docker pull 2138127826/mall-auth:1.0-SNAPSHOT
+docker pull 2138127826/mall-monitor:1.0-SNAPSHOT
+docker pull 2138127826/mall-admin:1.0-SNAPSHOT
+docker pull 2138127826/mall-portal:1.0-SNAPSHOT
+docker pull 2138127826/mall-search:1.0-SNAPSHOT
 
 docker-compose -f /root/mall-swarm/document/docker/docker-compose-app.yml up -d
