@@ -39,7 +39,8 @@ docker-compose -f /root/mall-swarm/document/docker/docker-compose-env.yml up -d
 docker ps
 
 #mysql
-# it's strange , when I use tab key to change code format to the below, 
+#1. 
+#it's strange , when I use tab key to change code format to the below, 
 # docker exec -i mysql /bin/bash << EOF
 #     #连接到mysql服务
 #     mysql -uroot -proot --default-character-set=utf8 << END
@@ -53,16 +54,20 @@ docker ps
 #         source /mall.sql;
 #     END
 # EOF
-# an error will occur.
-cp /root/mall-swarm/document/sql/mall.sql /mydata/mall.sql
-docker cp /mydata/mall.sql mysql:/
+#an error will occur.
+#2.
 # If I set sleep for 5 seconds, an error will emerge, sometimes it will be 
 #"Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock'" ,
 # and sometimes "Access denied for user'root'@'localhost' (using password: YES)",
 # but if I set sleep to 20 seconds, there will be no error occur.
 # I guess it need time to configure the envirenment to well.
-sleep 20
-docker exec -i mysql /bin/bash << EOF
+# sleep 20
+# this time ,the error also emerge
+cp /root/mall-swarm/document/sql/mall.sql /mydata/mall.sql
+docker cp /mydata/mall.sql mysql:/
+ConfigMysql(){
+sleep 10
+docker exec -i mysql /bin/bash << EOF | grep ERROR
 #连接到mysql服务
 mysql -uroot -proot --default-character-set=utf8 << END
 #创建远程访问用户
@@ -75,6 +80,14 @@ use mall;
 source /mall.sql;
 END
 EOF
+return $?
+}
+tmp=$(ConfigMysql)
+while [[ $? == 0 ]]
+do 
+    echo "error emerge ,try again"
+    tmp=$(ConfigMysql)
+done
 
 #elasticsearch
 docker exec -i elasticsearch /bin/bash << EOF
@@ -104,3 +117,25 @@ EOF
 docker exec -i rabbitmq /bin/bash << EOF
 rabbitmqctl set_permissions -p /mall mall ".*" ".*" ".*"
 EOF
+
+#nacos
+filelist=$(find /root/mall-swarm/config -name *.yaml)
+for file in $filelist
+do
+    #urlencode "#" and "&", or encoding problem will emerge 
+    filestr=$(< $file)
+    filestr=${filestr//#/%23}
+    filestr=${filestr//&/%26}
+    curl -X POST 'http://10.0.0.201:8848/nacos/v1/cs/configs' \
+    -d 'dataId='"$(basename $file)"'&group=DEFAULT_GROUP&content='"$filestr"'&type=yaml'
+done
+
+#pull images and run app
+docker pull macrodocker/mall-gateway:1.0-SNAPSHOT
+docker pull macrodocker/mall-auth:1.0-SNAPSHOT
+docker pull macrodocker/mall-monitor:1.0-SNAPSHOT
+docker pull macrodocker/mall-admin:1.0-SNAPSHOT
+docker pull macrodocker/mall-portal:1.0-SNAPSHOT
+docker pull macrodocker/mall-search:1.0-SNAPSHOT
+
+docker-compose -f /root/mall-swarm/document/docker/docker-compose-app.yml up -d
