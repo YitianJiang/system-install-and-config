@@ -67,7 +67,7 @@ cp /root/mall-swarm/document/sql/mall.sql /mydata/mall.sql
 docker cp /mydata/mall.sql mysql:/
 ConfigMysql(){
 sleep 10
-docker exec -i mysql /bin/bash << EOF  2>| grep ERROR
+docker exec -i mysql /bin/bash << EOF  2>&1 | grep ERROR
 #连接到mysql服务
 mysql -uroot -proot --default-character-set=utf8 << END
 #创建远程访问用户
