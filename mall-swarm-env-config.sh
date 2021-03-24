@@ -1,6 +1,14 @@
 #!/bin/bash
 bash /root/system-install-and-config/docker-install.sh
 
+# allow uploading images to docker  
+firewall-cmd --zone=public --permanent --add-port=2375/tcp
+firewall-cmd --reload
+sed -i 's/^ExecStart.*/ExecStart=\/usr\/bin\/dockerd -H tcp:\/\/0.0.0.0:2375 -H unix:\/\/var\/run\/docker.sock/' \
+/usr/lib/systemd/system/docker.service
+systemctl daemon-reload
+systemctl restart docker
+
 docker pull mysql:5.7
 docker pull redis:5
 docker pull nginx:1.10
