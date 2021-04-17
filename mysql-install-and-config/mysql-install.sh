@@ -1,6 +1,6 @@
 if [[ `wget --version | wc -l` -lt 10 ]]; then
     yum install -y wget
-
+fi
 wget -i -c http://dev.mysql.com/get/mysql57-community-release-el7-10.noarch.rpm
 yum -y install mysql57-community-release-el7-10.noarch.rpm
 yum -y install mysql-community-server
