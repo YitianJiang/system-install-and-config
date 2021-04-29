@@ -1,9 +1,5 @@
 #1. install,config and start mysql
-yum install -y git
-
-cd /root 
-git clone https://gitee.com/jiang_yitian/system-install-and-config.git
-bash system-install-and-config/docker-install.sh
+bash /root/system-install-and-config/docker-install.sh
 
 docker pull mysql:5.7
 containerId=$(docker run -p 3306:3306 --name mysql \
