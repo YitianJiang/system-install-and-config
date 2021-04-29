@@ -15,15 +15,16 @@ password=${passwordStr#*root@localhost: }
 
 #4.modify my.cnf after the first start of mysql other than before to avoid the following:
 #"Job for mysqld.service failed because the control process exited with error"
-cat <<- EOF >> /etc/my.cnf 
-    #添加validate_password_policy配置
-    validate_password_policy=0
-    #关闭密码策略
-    validate_password = off
+#the "-" after "<<" cannot take effect when tabs are added in vscode
+cat << EOF >> /etc/my.cnf 
+#添加validate_password_policy配置
+validate_password_policy=0
+#关闭密码策略
+validate_password = off
 
-    # 修改mysql的字符编码
-    character_set_server=utf8
-    init_connect='SET NAMES utf8'
+# 修改mysql的字符编码
+character_set_server=utf8
+init_connect='SET NAMES utf8'
 EOF
 
 #5. restart mysql to make the new configuration take effect, and then
