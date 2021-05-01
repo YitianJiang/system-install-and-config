@@ -33,7 +33,7 @@ done
 
 #2.pull circle image from dockerhub and start it
 docker pull 2138127826/main:0.0.1-SNAPSHOT
-docker run -p 8080:8080 --name circle-main \
+docker run -p 8088:8088 --name circle-main \
 --link mysql:db \
 -v /etc/localtime:/etc/localtime \
 -v /mydata/app/main/logs:/var/logs \
