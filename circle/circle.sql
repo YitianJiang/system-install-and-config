@@ -11,7 +11,7 @@
  Target Server Version : 50733
  File Encoding         : 65001
 
- Date: 26/04/2021 01:27:36
+ Date: 02/05/2021 06:45:26
 */
 
 SET NAMES utf8mb4;
@@ -33,7 +33,7 @@ CREATE TABLE `article`  (
 -- ----------------------------
 -- Records of article
 -- ----------------------------
-INSERT INTO `article` VALUES (1, '这是我的第一篇文章', NULL, 1, '2021-04-10 18:35:03');
+INSERT INTO `article` VALUES (1, '这是我的第一篇文章😀', NULL, 1, '2021-04-10 18:35:03');
 INSERT INTO `article` VALUES (2, '这是我的第二篇文章,这是我的第二篇文章,这是我的第二篇文章,这是我的第二篇文章,这是我的第二篇文章,这是我的第二篇文章,这是我的第二篇文章,这是我的第二篇文章,这是我的第二篇文章,这是我的第二篇文章,这是我的第二篇文章,这是我的第二篇文章,这是我的第二篇文章', 'https://yitianjiang-circle.oss-cn-beijing.aliyuncs.com/SampleVideo_720x480_10mb.mp4', 1, '2021-04-10 18:35:03');
 INSERT INTO `article` VALUES (3, '这是我的第三篇文章', NULL, 1, '2021-04-10 18:35:03');
 INSERT INTO `article` VALUES (4, '这是我的第四篇文章', NULL, 1, '2021-04-10 18:35:03');
@@ -107,7 +107,7 @@ CREATE TABLE `like`  (
   `article_id` bigint(20) UNSIGNED NULL DEFAULT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 57 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 111 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of like
@@ -127,7 +127,7 @@ INSERT INTO `like` VALUES (46, NULL, 11, 4);
 INSERT INTO `like` VALUES (47, NULL, 11, 4);
 INSERT INTO `like` VALUES (49, NULL, 8, 4);
 INSERT INTO `like` VALUES (50, NULL, 5, 4);
-INSERT INTO `like` VALUES (56, NULL, 1, 4);
+INSERT INTO `like` VALUES (110, NULL, 1, 4);
 
 -- ----------------------------
 -- Table structure for user
