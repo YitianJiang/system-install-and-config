@@ -5,7 +5,6 @@ cat << EOF >>/etc/profile
 export JAVA_HOME=${temp%/jre/bin*}
 export CLASSPATH=.:$JAVA_HOME/jre/lib/rt.jar:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 export PATH=$PATH:$JAVA_HOME/bin
-123
 EOF
 source /etc/profile
 echo $JAVA_HOME
