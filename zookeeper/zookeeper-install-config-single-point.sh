@@ -1,6 +1,7 @@
 zkVersion=3.7.0
 if [[ $1 != "" ]]; then
     zkVersion=$1
+fi
 cd /root
 wget https://downloads.apache.org/zookeeper/zookeeper-${zkVersion}/apache-zookeeper-${zkVersion}.tar.gz 
 tar zxvf apache-zookeeper-${zkVersion}.tar.gz
