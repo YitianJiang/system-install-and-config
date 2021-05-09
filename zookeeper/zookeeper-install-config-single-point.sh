@@ -11,5 +11,5 @@ mkdir /root/apache-zookeeper-${zkVersion}/logs
 cat << EOF >> /root/apache-zookeeper-${zkVersion}/conf/zoo.cfg
 dataDir=/root/apache-zookeeper-${zkVersion}/data
 dataLogDir=/root/apache-zookeeper-${zkVersion}/logs
-EOF 
+EOF
 . /root/apache-zookeeper-${zkVersion}/bin/zkServer.sh start
