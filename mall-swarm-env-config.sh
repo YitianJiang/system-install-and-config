@@ -134,7 +134,7 @@ do
     filestr=$(< $file)
     filestr=${filestr//#/%23}
     filestr=${filestr//&/%26}
-    curl -X POST 'http://10.0.0.201:8848/nacos/v1/cs/configs' \
+    curl -X POST 'http://127.0.0.1:8848/nacos/v1/cs/configs' \
     -d 'dataId='"$(basename $file)"'&group=DEFAULT_GROUP&content='"$filestr"'&type=yaml'
 done
 
