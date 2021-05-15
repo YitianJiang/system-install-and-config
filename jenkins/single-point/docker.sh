@@ -10,7 +10,7 @@ docker run --name jenkins-docker \
   --volume jenkins-data:/var/jenkins_home \
   --publish 2376:2376 docker:dind --storage-driver overlay2
 
-docker build -t myjenkins-blueocean:1.1 $(pwd)
+docker build -t myjenkins-blueocean:1.1 $(dirname $0)
 
 #change --rm to --restart=always
 docker run --name jenkins-blueocean \
