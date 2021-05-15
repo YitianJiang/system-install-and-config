@@ -6,3 +6,10 @@
 
 ### 目录规范：
 
+```java
+jenkins
+├── cluster -- 工具类及通用代码模块
+├── single-point -- MyBatisGenerator生成的数据库操作代码模块
+├── mall-auth -- 基于Spring Security Oauth2的统一的认证中心
+```
+
