@@ -1,7 +1,8 @@
 #!/bin/sh
 if [[ `docker --version 2>&1 | grep "command not found" | wc -l` -eq 0 ]]; then
-  echo "docker has been installed" && exit
+  echo "docker has been installed" && exit 0
 fi
+
 sed -i '/net.bridge.bridge-nf-call-ip6tables/d' /etc/sysctl.conf
 sed -i '/net.bridge.bridge-nf-call-iptables/d' /etc/sysctl.conf
 cat << EOF >>/etc/sysctl.conf
