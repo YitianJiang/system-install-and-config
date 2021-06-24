@@ -67,16 +67,14 @@ docker pull zookeeper:${version}
 mkdir -p ${confDir}
 cp $SYSTEM_INSTALL_AND_CONFIG/zookeeper/zoo.cfg ${confDir}
 
-# mkdir -p ${dataDir}
 # sed -i '/dataDir=/d' ${confDir}/zoo.cfg  #先删除原有的
 # echo dataDir=${dataDir} >> ${confDir}/zoo.cfg  #再添加新的 
 
-# mkdir -p ${logDir}
 # sed -i '/dataLogDir=/d' ${confDir}/zoo.cfg
 # echo dataLogDir=${logDir} >> ${confDir}/zoo.cfg 
 cat << EOF >> ${confDir}/zoo.cfg
-dataDir=${dataDir}
-dataLogDir=${logDir}
+dataDir=zookeeper-${version}/data
+dataLogDir=/zookeeper-${version}/logs
 EOF
 
 docker run -d --name zookeeper \
