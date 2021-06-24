@@ -1,8 +1,6 @@
 ############################################通用##################################################################
-set -eux
-if [[ $SYSTEM_INSTALL_AND_CONFIG == "" ]]; then
-	export SYSTEM_INSTALL_AND_CONFIG=$(find / -name system-install-and-config)
-fi
+set -ex
+[[ $SYSTEM_INSTALL_AND_CONFIG == "" ]] && export SYSTEM_INSTALL_AND_CONFIG=$(find / -name system-install-and-config)
 ############################################通用##################################################################
 
 bash $SYSTEM_INSTALL_AND_CONFIG/docker-install.sh
