@@ -1,5 +1,42 @@
 version: '3'
 services:
+  zookeeper:
+    image: zookeeper:3.4.9
+    restart: always
+    privileged: true
+    ports:
+      - 2181:2181
+    volumes:
+      - /mydata/zookeeper/conf:/zookeeper-3.4.9/conf
+      - /mydata/zookeeper/data:/zookeeper-3.4.9/data
+      - /mydata/zookeeper/logs:/zookeeper-3.4.9/logs
+
+  kafka:
+    image: wurstmeister/kafka
+    restart: always
+    privileged: true
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 0
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://120.27.215.93:9092
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      JMX_PORT: 9988
+    depends_on:
+      - zookeeper #kafka在zookeeper之后启动
+
+  kafka-manager:
+    image: sheepkiller/kafka-manager
+    restart: always
+    ports:
+      - "9000:9000"
+    environment:
+      ZK_HOSTS: zookeeper:2181
+    depends_on:
+      - zookeeper
+      - kafka
+
   elasticsearch:
     image: elasticsearch:7.6.2
     restart: always    
@@ -14,6 +51,7 @@ services:
     ports:
       - 9200:9200
       - 9300:9300
+
   logstash:
     image: logstash:7.6.2
     restart: always    
@@ -23,21 +61,13 @@ services:
       - /mydata/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf #挂载logstash的配置文件
     depends_on:
       - elasticsearch #kibana在elasticsearch启动之后再启动
-    links:
-      - elasticsearch:es #可以用es这个域名访问elasticsearch服务
-    ports:
-      - 4560:4560
-      - 4561:4561
-      - 4562:4562
-      - 4563:4563
+
   kibana:
     image: kibana:7.6.2
     restart: always    
-    links:
-      - elasticsearch:es #可以用es这个域名访问elasticsearch服务
     depends_on:
       - elasticsearch #kibana在elasticsearch启动之后再启动
     environment:
-      - "elasticsearch.hosts=http://es:9200" #设置访问elasticsearch的地址
+      - "elasticsearch.hosts=http://elasticsearch:9200" #设置访问elasticsearch的地址
     ports:
       - 5601:5601

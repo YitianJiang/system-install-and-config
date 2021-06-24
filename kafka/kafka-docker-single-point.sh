@@ -17,13 +17,15 @@ docker run  -d --name kafka \
 -e KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181 \
 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://${ip}:9092 \
 -e KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092 \
+--volume /etc/localtime:/etc/localtime \
 -t wurstmeister/kafka \
 
 #安装kafkamanager
 docker run -d --name kafka-manager \
 --link zookeeper:zookeeper \
 --link kafka:kafka \
--p 9001:9000 \
+-p 9000:9000 \
 --restart=always \
 --env ZK_HOSTS=zookeeper:2181 \
+--volume /etc/localtime:/etc/localtime \
 sheepkiller/kafka-manager

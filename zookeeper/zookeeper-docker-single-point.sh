@@ -16,8 +16,8 @@ fi
 version=3.4.9
 confDir=/root/zookeeper-${version}/conf
 dataDir=/root/zookeeper-${version}/data
-dataLogDir=/root/zookeeper-${version}/logs
-TEMP=`getopt -o v:c:d:l: -a -l version:,confDir:,dataDir:,dataLogDir: -n "ERROR" -- "$@"`
+logDir=/root/zookeeper-${version}/logs
+TEMP=`getopt -o v:c:d:l: -a -l version:,confDir:,dataDir:,logDir: -n "ERROR" -- "$@"`
  
 # 判定 getopt 的执行时候有错，错误信息输出到 STDERR
 if [ $? != 0 ]
@@ -46,7 +46,7 @@ do
 						echo "option d, argument $2"
 						shift 2
 						;;
-		-l | --dataLogDir | -dataLogDir) dataLogDir=$2
+		-l | --logDir | -logDir) logDir=$2
 			echo "option l, argument $2"
 			shift 2
 			;;
@@ -71,12 +71,12 @@ cp $SYSTEM_INSTALL_AND_CONFIG/zookeeper/zoo.cfg ${confDir}
 # sed -i '/dataDir=/d' ${confDir}/zoo.cfg  #先删除原有的
 # echo dataDir=${dataDir} >> ${confDir}/zoo.cfg  #再添加新的 
 
-# mkdir -p ${dataLogDir}
+# mkdir -p ${logDir}
 # sed -i '/dataLogDir=/d' ${confDir}/zoo.cfg
-# echo dataLogDir=${dataLogDir} >> ${confDir}/zoo.cfg 
+# echo dataLogDir=${logDir} >> ${confDir}/zoo.cfg 
 cat << EOF >> ${confDir}/zoo.cfg
 dataDir=${dataDir}
-dataLogDir=${dataLogDir}
+dataLogDir=${logDir}
 EOF
 
 docker run -d --name zookeeper \
@@ -84,6 +84,6 @@ docker run -d --name zookeeper \
 -p 2181:2181 \
 -v ${confDir}:/zookeeper-${version}/conf \
 -v ${dataDir}:/zookeeper-${version}/data \
--v ${dataLogDir}:/zookeeper-${version}/logs \
+-v ${logDir}:/zookeeper-${version}/logs \
 zookeeper:${version}
 
