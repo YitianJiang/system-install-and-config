@@ -1,6 +1,8 @@
 ############################################通用##################################################################
 set -ex
 [[ $SYSTEM_INSTALL_AND_CONFIG == "" ]] && export SYSTEM_INSTALL_AND_CONFIG=$(find / -name system-install-and-config)
+set -u
+exec 2>$SYSTEM_INSTALL_AND_CONFIG/log
 ############################################通用##################################################################
 
 bash /root/system-install-and-config/docker-install.sh
@@ -32,9 +34,18 @@ chmod +x /usr/local/bin/docker-compose
 docker-compose -f $SYSTEM_INSTALL_AND_CONFIG/circle/docker-compose-env.yml up -d
 
 #安装logstash插件
+# use "set +e" to avoid exiting when the following errors occur:
+#   OpenJDK 64-Bit Server VM warning: Option UseConcMarkSweepGC was deprecated in version 9.0 and will likely be removed in a future release.
+#   WARNING: An illegal reflective access operation has occurred
+#   WARNING: Illegal reflective access by com.headius.backport9.modules.Modules to method sun.nio.ch.NativeThread.signal(long)
+#   WARNING: Please consider reporting this to the maintainers of com.headius.backport9.modules.Modules
+#   WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+#   WARNING: All illegal access operations will be denied in a future release
+set +e
 docker exec -i logstash /bin/bash << EOF
 logstash-plugin install logstash-codec-json_lines
 EOF
+set -e
 docker restart logstash
 
 #安装es插件
