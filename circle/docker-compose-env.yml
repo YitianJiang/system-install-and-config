@@ -11,6 +11,7 @@ services:
       - /mydata/zookeeper/conf:/zookeeper-3.4.9/conf
       - /mydata/zookeeper/data:/zookeeper-3.4.9/data
       - /mydata/zookeeper/logs:/zookeeper-3.4.9/logs
+      - /etc/localtime:/etc/localtime
 
   kafka:
     image: wurstmeister/kafka
@@ -27,6 +28,8 @@ services:
       JMX_PORT: 9988
     depends_on:
       - zookeeper #kafka在zookeeper之后启动
+    volumes:
+      - /etc/localtime:/etc/localtime
 
   kafka-manager:
     image: sheepkiller/kafka-manager
@@ -39,6 +42,8 @@ services:
     depends_on:
       - zookeeper
       - kafka
+    volumes:
+      - /etc/localtime:/etc/localtime
 
   elasticsearch:
     image: elasticsearch:7.6.2
@@ -52,6 +57,7 @@ services:
     volumes:
       - /mydata/elasticsearch/plugins:/usr/share/elasticsearch/plugins #插件文件挂载
       - /mydata/elasticsearch/data:/usr/share/elasticsearch/data #数据文件挂载
+      - /etc/localtime:/etc/localtime
     ports:
       - 9200:9200
       - 9300:9300
@@ -64,6 +70,7 @@ services:
       - TZ=Asia/Shanghai
     volumes:
       - /mydata/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf #挂载logstash的配置文件
+      - /etc/localtime:/etc/localtime
     depends_on:
       - elasticsearch #kibana在elasticsearch启动之后再启动
 
@@ -77,3 +84,5 @@ services:
       - "elasticsearch.hosts=http://elasticsearch:9200" #设置访问elasticsearch的地址
     ports:
       - 5601:5601
+    volumes:
+      - /etc/localtime:/etc/localtime
