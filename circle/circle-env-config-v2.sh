@@ -5,7 +5,7 @@ set -ex
 
 bash /root/system-install-and-config/docker-install.sh
 
-ddocker pull zookeeper:3.4.9
+docker pull zookeeper:3.4.9
 docker pull wurstmeister/kafka
 docker pull sheepkiller/kafka-manager
 docker pull elasticsearch:7.6.2
