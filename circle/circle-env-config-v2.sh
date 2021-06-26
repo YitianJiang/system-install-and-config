@@ -29,7 +29,7 @@ cp $SYSTEM_INSTALL_AND_CONFIG/circle/zoo.cfg /mydata/zookeeper/conf
 #下载安装Docker Compose 及启动各容器
 curl -L https://get.daocloud.io/docker/compose/releases/download/1.24.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
-docker-compose -f $SYSTEM_INSTALL_AND_CONFIG/docker-compose-env.yml up -d
+docker-compose -f $SYSTEM_INSTALL_AND_CONFIG/circle/docker-compose-env.yml up -d
 
 #安装logstash插件
 docker exec -i logstash /bin/bash << EOF
