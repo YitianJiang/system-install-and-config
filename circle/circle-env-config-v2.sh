@@ -5,7 +5,7 @@ set -u
 exec 2>$SYSTEM_INSTALL_AND_CONFIG/log
 ############################################通用##################################################################
 
-bash /root/system-install-and-config/docker-install.sh
+bash $SYSTEM_INSTALL_AND_CONFIG/docker-install.sh
 
 docker pull zookeeper:3.4.9
 docker pull wurstmeister/kafka
