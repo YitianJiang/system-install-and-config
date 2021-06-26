@@ -24,7 +24,7 @@ chmod 777 /mydata/elasticsearch/data
 
 #zookeeper 宿主机挂载目录创建
 mkdir -p /mydata/zookeeper/conf  /mydata/zookeeper/data /mydata/zookeeper/logs
-cp $SYSTEM_INSTALL_AND_CONFIG/zoo.cfg /mydata/zookeeper/conf
+cp $SYSTEM_INSTALL_AND_CONFIG/circle/zoo.cfg /mydata/zookeeper/conf
 
 #下载安装Docker Compose 及启动各容器
 curl -L https://get.daocloud.io/docker/compose/releases/download/1.24.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
