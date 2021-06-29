@@ -8,9 +8,15 @@ docker run --detach \
   --volume /mydata/gitlab/data:/var/opt/gitlab \
   gitlab/gitlab-ce:latest
 
-# 开启1080端口
-firewall-cmd --zone=public --add-port=1080/tcp --permanent 
-# 重启防火墙才能生效
-systemctl restart firewalld
-# 查看已经开放的端口
-firewall-cmd --list-ports
+docker exec -i gitlab /bin/bash <<- EOF
+	cd /opt/gitlab/bin
+		gitlab-rails console <<- END
+		u=User.where(id:1).first
+		u.password='12345678'
+		u.password_confirmation='12345678'
+		u.save!
+	END   
+EOF
+
+
+
