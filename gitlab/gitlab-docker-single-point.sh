@@ -8,6 +8,8 @@ docker run --detach \
   --volume /mydata/gitlab/data:/var/opt/gitlab \
   gitlab/gitlab-ce:latest
 
+sleep 120s
+
 docker exec -i gitlab /bin/bash <<- EOF
 cd /opt/gitlab/bin
 gitlab-rails console <<- END
