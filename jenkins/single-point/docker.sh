@@ -1,11 +1,11 @@
-# ############################################通用##################################################################
-# set -ex
-# [[ $SYSTEM_INSTALL_AND_CONFIG == "" ]] && export SYSTEM_INSTALL_AND_CONFIG=$(find / -name system-install-and-config)
-# set -u
-# exec 2>$SYSTEM_INSTALL_AND_CONFIG/log
-# ############################################通用##################################################################
+############################################通用##################################################################
+set -ex
+[[ $SYSTEM_INSTALL_AND_CONFIG == "" ]] && export SYSTEM_INSTALL_AND_CONFIG=$(find / -name system-install-and-config)
+set -u
+exec 2>$SYSTEM_INSTALL_AND_CONFIG/log
+############################################通用##################################################################
 
-# bash $SYSTEM_INSTALL_AND_CONFIG/docker-install.sh
+bash $SYSTEM_INSTALL_AND_CONFIG/docker-install.sh
 
 # #referencce: https://www.jenkins.io/doc/book/installing/docker/
 # docker network create jenkins
@@ -36,10 +36,12 @@
 
 docker run \
   -u root \
+	--privileged=true \
   -d \
   -p 8086:8080 \
   -p 50000:50000 \
   -v jenkins-data:/var/jenkins_home \
   -v /var/run/docker.sock:/var/run/docker.sock \
   --restart=always \
+  --volume /etc/localtime:/etc/localtime \
   jenkinsci/blueocean
