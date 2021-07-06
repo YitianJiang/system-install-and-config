@@ -1,4 +1,4 @@
-### 编写原则：
+## 编写原则：
 
 1. 脚本尽量不要与固定ip绑定
    填写当前主机ip时,可以util中的getIp方法获取
@@ -32,7 +32,7 @@
 ```
 5. docker 安装时，应加上" --volume /etc/localtime:/etc/localtime "让docker时间和主机时间同步。
 
-### 目录规范：
+## 目录规范：
 
 ```java
 jenkins -- 项目名称
