@@ -25,12 +25,12 @@
   fi
 ```
 
-​	应写为:
+​	应写为：
 
 ```shell
 [[ $SYSTEM_INSTALL_AND_CONFIG == "" ]] && SYSTEM_INSTALL_AND_CONFIG=$(find / -name system-install-and-config)
 ```
-	5. docker 安装时，应加上" --volume /etc/localtime:/etc/localtime "让docker时间和主机时间同步。
+5. docker 安装时，应加上" --volume /etc/localtime:/etc/localtime "让docker时间和主机时间同步。
 
 ### 目录规范：
 
