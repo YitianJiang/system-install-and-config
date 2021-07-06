@@ -25,7 +25,7 @@
   fi
 ```
 
-​	应写为：
+　应写为：
 
 ```shell
 [[ $SYSTEM_INSTALL_AND_CONFIG == "" ]] && SYSTEM_INSTALL_AND_CONFIG=$(find / -name system-install-and-config)
