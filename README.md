@@ -14,23 +14,21 @@
    可以通过在每个脚本首部加上下面一段获取system-install-and-config根路径改写：
 
 ``` shell
-	[[ $SYSTEM_INSTALL_AND_CONFIG == "" ]] && 
-	SYSTEM_INSTALL_AND_CONFIG=$(find / -name system-install-and-config)
+[[ $SYSTEM_INSTALL_AND_CONFIG == "" ]] && SYSTEM_INSTALL_AND_CONFIG=$(find / -name system-install-and-config)
 ```
 
-​	4. if条件只有一个分支时，使用[[ xxx ]] && xxx,而不是if[ xxx ]; then xxx; fi 如：
+4. if条件只有一个分支时，使用[[ xxx ]] && xxx,而不是if[ xxx ]; then xxx; fi 如：
 
 ```shell
   if [[ $SYSTEM_INSTALL_AND_CONFIG == "" ]]; then
-	export SYSTEM_INSTALL_AND_CONFIG=$(find / -name system-install-and-config)
+    export SYSTEM_INSTALL_AND_CONFIG=$(find / -name system-install-and-config)
   fi
 ```
 
-​		应写为:
+​	应写为:
 
 ```shell
-	[[ $SYSTEM_INSTALL_AND_CONFIG == "" ]] && 
-	SYSTEM_INSTALL_AND_CONFIG=$(find / -name system-install-and-config)
+[[ $SYSTEM_INSTALL_AND_CONFIG == "" ]] && SYSTEM_INSTALL_AND_CONFIG=$(find / -name system-install-and-config)
 ```
 	5. docker 安装时，应加上" --volume /etc/localtime:/etc/localtime "让docker时间和主机时间同步。
 
