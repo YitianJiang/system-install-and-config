@@ -1,0 +1,41 @@
+version: '3'
+services:
+  circle-main:
+    image: registry.cn-hangzhou.aliyuncs.com/jiangyitian/aliyun-docker-image-registry:circle-main-1.0.3-SNAPSHOT
+    container_name: circle-main
+    restart: always
+      - nacos-registry
+    ports:
+      - 8080:8080
+    volumes:
+      - /mydata/app/mall-admin/logs:/var/logs
+      - /etc/localtime:/etc/localtime
+    environment:
+      - 'TZ="Asia/Shanghai"'
+      - 'ENV_HOST=xxx'
+
+  circle-auth:
+    image: registry.cn-hangzhou.aliyuncs.com/jiangyitian/aliyun-docker-image-registry:circle-auth-1.0.0-SNAPSHOT
+    container_name: circle-auth
+    restart: always
+    ports:
+      - 8401:8401
+    volumes:
+      - /mydata/app/mall-auth/logs:/var/logs
+      - /etc/localtime:/etc/localtime
+    environment:
+      - 'TZ="Asia/Shanghai"'
+      - 'ENV_HOST=xxx'
+
+  circle-gateway:
+    image: registry.cn-hangzhou.aliyuncs.com/jiangyitian/aliyun-docker-image-registry:circle-gateway-1.0.0-SNAPSHOT
+    container_name: circle-gateway
+    restart: always
+    ports:
+      - 8201:8201
+    volumes:
+      - /mydata/app/mall-gateway/logs:/var/logs
+      - /etc/localtime:/etc/localtime
+    environment:
+      - 'TZ="Asia/Shanghai"'
+      - 'ENV_HOST=xxx'

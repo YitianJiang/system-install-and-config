@@ -86,3 +86,36 @@ services:
       - 5601:5601
     volumes:
       - /etc/localtime:/etc/localtime
+
+  nacos-registry:
+    image: nacos/nacos-server:1.3.0
+    container_name: nacos-registry
+    restart: always    
+    environment:
+      - "MODE=standalone"
+    ports:
+      - 8848:8848
+      
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root #设置root帐号密码
+    ports:
+      - 3306:3306
+    volumes:
+      - /mydata/mysql/data/db:/var/lib/mysql #数据文件挂载
+      - /mydata/mysql/data/conf:/etc/mysql/conf.d #配置文件挂载
+      - /mydata/mysql/log:/var/log/mysql #日志文件挂载
+
+  redis:
+    image: redis:5
+    container_name: redis
+    restart: always
+    command: redis-server --appendonly yes
+    volumes:
+      - /mydata/redis/data:/data #数据文件挂载
+    ports:
+      - 6379:6379
