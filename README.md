@@ -20,9 +20,9 @@
 4. if条件只有一个分支时，使用[[ xxx ]] && xxx,而不是if[ xxx ]; then xxx; fi 如：
 
 ```shell
-　if [[ $SYSTEM_INSTALL_AND_CONFIG == "" ]]; then
+  if [[ $SYSTEM_INSTALL_AND_CONFIG == "" ]]; then
 　　export SYSTEM_INSTALL_AND_CONFIG=$(find / -name system-install-and-config)
-　fi
+  fi
 ```
 
 　应写为：
