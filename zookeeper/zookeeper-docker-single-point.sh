@@ -83,5 +83,6 @@ docker run -d --name zookeeper \
 -v ${confDir}:/zookeeper-${version}/conf \
 -v ${dataDir}:/zookeeper-${version}/data \
 -v ${logDir}:/zookeeper-${version}/logs \
+-v /etc/localtime:/etc/localtime \
 zookeeper:${version}
 
