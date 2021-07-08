@@ -73,7 +73,7 @@ cp $SYSTEM_INSTALL_AND_CONFIG/zookeeper/zoo.cfg ${confDir}
 # sed -i '/dataLogDir=/d' ${confDir}/zoo.cfg
 # echo dataLogDir=${logDir} >> ${confDir}/zoo.cfg 
 cat << EOF >> ${confDir}/zoo.cfg
-dataDir=zookeeper-${version}/data
+dataDir=/zookeeper-${version}/data
 dataLogDir=/zookeeper-${version}/logs
 EOF
 
