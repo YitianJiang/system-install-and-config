@@ -17,6 +17,7 @@ docker run  -d --name kafka \
 -e KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181 \
 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://${ip}:9092 \
 -e KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092 \
+--restart=always \
 --volume /etc/localtime:/etc/localtime \
 -t wurstmeister/kafka \
 
