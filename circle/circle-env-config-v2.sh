@@ -61,7 +61,6 @@ do
     curl -X POST 'http://127.0.0.1:8848/nacos/v1/cs/configs' \
     -d 'dataId='"$(basename $file)"'&group=DEFAULT_GROUP&content='"$filestr"'&type=yaml'
 done
-set -e
 
 #配置mysql
 cp $SYSTEM_INSTALL_AND_CONFIG/circle/circle.sql /mydata/circle.sql
