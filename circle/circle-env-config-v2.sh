@@ -7,13 +7,6 @@ exec 2>$SYSTEM_INSTALL_AND_CONFIG/log
 
 bash $SYSTEM_INSTALL_AND_CONFIG/docker-install.sh
 
-docker pull zookeeper:3.4.9
-docker pull wurstmeister/kafka
-docker pull sheepkiller/kafka-manager
-docker pull elasticsearch:7.6.2
-docker pull logstash:7.6.2
-docker pull kibana:7.6.2
-
 #logstash 宿主机挂载目录创建
 mkdir -p /mydata/logstash
 cp $SYSTEM_INSTALL_AND_CONFIG/circle/logstash.conf /mydata/logstash
@@ -28,9 +21,11 @@ chmod 777 /mydata/elasticsearch/data
 mkdir -p /mydata/zookeeper/conf  /mydata/zookeeper/data /mydata/zookeeper/logs
 cp $SYSTEM_INSTALL_AND_CONFIG/circle/zoo.cfg /mydata/zookeeper/conf
 
-#下载安装Docker Compose 及启动各容器
+#下载安装Docker Compose
 curl -L https://get.daocloud.io/docker/compose/releases/download/1.24.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
+
+####################################################配置环境###################################################################
 docker-compose -f $SYSTEM_INSTALL_AND_CONFIG/circle/docker-compose-env.yml up -d
 
 #安装logstash插件
@@ -53,3 +48,46 @@ docker exec -i elasticsearch /bin/bash << EOF
 elasticsearch-plugin install -b https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.6.2/elasticsearch-analysis-ik-7.6.2.zip
 EOF
 docker restart elasticsearch
+
+#配置文件上传nacos
+filelist=$(find $SYSTEM_INSTALL_AND_CONFIG/circle/app-config -name *.yaml)
+for file in $filelist
+do
+    #urlencode "#" and "&", or encoding problem will emerge 
+    filestr=$(< $file)
+    filestr=${filestr//#/%23}
+    filestr=${filestr//&/%26}
+    curl -X POST 'http://127.0.0.1:8848/nacos/v1/cs/configs' \
+    -d 'dataId='"$(basename $file)"'&group=DEFAULT_GROUP&content='"$filestr"'&type=yaml'
+done
+
+#配置mysql
+cp $SYSTEM_INSTALL_AND_CONFIG/circle/circle.sql /mydata/circle.sql
+docker cp /mydata/circle.sql mysql:/
+ConfigMysql(){
+sleep 10
+docker exec -i mysql /bin/bash << EOF  2>&1 | grep ERROR
+#连接到mysql服务
+mysql -uroot -proot --default-character-set=utf8 << END
+#创建远程访问用户
+grant all privileges on *.* to 'reader' @'%' identified by '123456';
+#创建circle数据库
+create database circle character set utf8;
+#使用circle数据库
+use circle;
+#导入circle.sql脚本
+source /circle.sql;
+END
+EOF
+return $?
+}
+tmp=$(ConfigMysql)
+while [[ $? == 0 ]]
+do 
+    echo "error emerge ,try again"
+    tmp=$(ConfigMysql)
+done
+
+####################################################安装启动应用###################################################################
+docker login --username=jiangyitian123456  -p jiang123456 registry.cn-hangzhou.aliyuncs.com
+docker-compose -f $SYSTEM_INSTALL_AND_CONFIG/circle/docker-compose-app.yml up -d
