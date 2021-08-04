@@ -50,6 +50,7 @@ EOF
 docker restart elasticsearch
 
 #配置文件上传nacos
+set +e
 filelist=$(find $SYSTEM_INSTALL_AND_CONFIG/circle/app-config -name *.yaml)
 for file in $filelist
 do
@@ -60,6 +61,7 @@ do
     curl -X POST 'http://127.0.0.1:8848/nacos/v1/cs/configs' \
     -d 'dataId='"$(basename $file)"'&group=DEFAULT_GROUP&content='"$filestr"'&type=yaml'
 done
+set -e
 
 #配置mysql
 cp $SYSTEM_INSTALL_AND_CONFIG/circle/circle.sql /mydata/circle.sql
