@@ -4,7 +4,6 @@ services:
     image: registry.cn-hangzhou.aliyuncs.com/jiangyitian/aliyun-docker-image-registry:circle-main-1.0.3-SNAPSHOT
     container_name: circle-main
     restart: always
-      - nacos-registry
     ports:
       - 8080:8080
     volumes:
@@ -12,7 +11,6 @@ services:
       - /etc/localtime:/etc/localtime
     environment:
       - 'TZ="Asia/Shanghai"'
-      - 'ENV_HOST=xxx'
 
   circle-auth:
     image: registry.cn-hangzhou.aliyuncs.com/jiangyitian/aliyun-docker-image-registry:circle-auth-1.0.0-SNAPSHOT
@@ -25,7 +23,6 @@ services:
       - /etc/localtime:/etc/localtime
     environment:
       - 'TZ="Asia/Shanghai"'
-      - 'ENV_HOST=xxx'
 
   circle-gateway:
     image: registry.cn-hangzhou.aliyuncs.com/jiangyitian/aliyun-docker-image-registry:circle-gateway-1.0.0-SNAPSHOT
@@ -38,4 +35,3 @@ services:
       - /etc/localtime:/etc/localtime
     environment:
       - 'TZ="Asia/Shanghai"'
-      - 'ENV_HOST=xxx'
