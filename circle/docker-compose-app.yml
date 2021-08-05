@@ -1,5 +1,17 @@
+#docker-compose up 创建的容器默认会在circle_default网段下 业务应用和环境应用能够直接通信，不必加--link
 version: '3'
 services:
+  leaf-server:
+  image: registry.cn-hangzhou.aliyuncs.com/jiangyitian/aliyun-docker-image-registry:circle-leaf-server-1.0.1
+  container_name: leaf-server
+  restart: always
+  ports:
+    - 9090:9090
+  volumes:
+    - /etc/localtime:/etc/localtime
+  environment:
+    - 'TZ="Asia/Shanghai"'
+
   circle-main:
     image: registry.cn-hangzhou.aliyuncs.com/jiangyitian/aliyun-docker-image-registry:circle-main-1.0.3-SNAPSHOT
     container_name: circle-main
@@ -11,6 +23,8 @@ services:
       - /etc/localtime:/etc/localtime
     environment:
       - 'TZ="Asia/Shanghai"'
+    depends_on:
+      - leaf-server #circle-main在leaf-server之后启动
 
   circle-auth:
     image: registry.cn-hangzhou.aliyuncs.com/jiangyitian/aliyun-docker-image-registry:circle-auth-1.0.0-SNAPSHOT
