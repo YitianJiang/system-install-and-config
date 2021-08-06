@@ -11,7 +11,7 @@
  Target Server Version : 50733
  File Encoding         : 65001
 
- Date: 04/08/2021 17:56:56
+ Date: 07/08/2021 00:49:31
 */
 
 SET NAMES utf8mb4;
@@ -46,13 +46,13 @@ INSERT INTO `article` VALUES (8, '这是余文艳写的第三篇文章', NULL, 2
 INSERT INTO `article` VALUES (9, '这是张凯旋写的第一篇文章', NULL, 3, '2021-04-10 18:35:03', NULL);
 INSERT INTO `article` VALUES (10, '这是张凯旋写的第二篇文章', NULL, 3, '2021-04-10 18:35:03', NULL);
 INSERT INTO `article` VALUES (11, '这是张凯旋写的第三篇文章', NULL, 3, '2021-04-10 18:35:03', NULL);
-INSERT INTO `article` VALUES (12, '这是张三的一篇文章', NULL, 4, '2021-07-14 15:24:38', NULL);
-INSERT INTO `article` VALUES (1419700938670604378, 'qwee', NULL, 4, '2021-07-26 16:47:51', NULL);
-INSERT INTO `article` VALUES (1420137542484754436, '张三发布三张图片', NULL, 4, '2021-07-27 21:42:30', NULL);
-INSERT INTO `article` VALUES (1420148356356767835, '张三发布了一个视频', 'https://yitianjiang-circle.oss-cn-beijing.aliyuncs.com/UserVideos/4/1627424600602/http://127.0.0.1:9000/__dev__/4084d7c4fd4f6a89b3da3b68a362a007c551a5b1/temp/temVideos/02dd2eef08f6e4407a6b8f107c1f60aa.mp4', 4, '2021-07-27 22:25:29', NULL);
-INSERT INTO `article` VALUES (1420423721516007433, '张三发布第二个视频', 'https://yitianjiang-circle.oss-cn-beijing.aliyuncs.com/UserVideos/4/1627490353251/http://127.0.0.1:9000/__dev__/4084d7c4fd4f6a89b3da3b68a362a007c551a5b1/temp/temVideos/02dd2eef08f6e4407a6b8f107c1f60aa.mp4', 4, '2021-07-28 16:39:47', NULL);
-INSERT INTO `article` VALUES (1420477574370295821, '张三发布了4张图片', NULL, 4, '2021-07-28 20:13:48', NULL);
-INSERT INTO `article` VALUES (1421560981443575847, '这是一篇文章', NULL, 4, '2021-08-01 03:58:44', NULL);
+INSERT INTO `article` VALUES (12, '这是张三的第一篇文章', NULL, 4, '2021-07-14 15:24:38', NULL);
+INSERT INTO `article` VALUES (1419700938670604378, '这是张三的第二篇文章', NULL, 4, '2021-07-26 16:47:51', NULL);
+INSERT INTO `article` VALUES (1420137542484754436, '这是张三的第三篇文章', NULL, 4, '2021-07-27 21:42:30', NULL);
+INSERT INTO `article` VALUES (1420148356356767835, '这是张三的第四篇文章', 'https://yitianjiang-circle.oss-cn-beijing.aliyuncs.com/UserVideos/4/1627424600602/http://127.0.0.1:9000/__dev__/4084d7c4fd4f6a89b3da3b68a362a007c551a5b1/temp/temVideos/02dd2eef08f6e4407a6b8f107c1f60aa.mp4', 4, '2021-07-27 22:25:29', NULL);
+INSERT INTO `article` VALUES (1420423721516007433, '这是张三的第五篇文章', 'https://yitianjiang-circle.oss-cn-beijing.aliyuncs.com/UserVideos/4/1627490353251/http://127.0.0.1:9000/__dev__/4084d7c4fd4f6a89b3da3b68a362a007c551a5b1/temp/temVideos/02dd2eef08f6e4407a6b8f107c1f60aa.mp4', 4, '2021-07-28 16:39:47', NULL);
+INSERT INTO `article` VALUES (1420477574370295821, '这是张三的第六篇文章', NULL, 4, '2021-07-28 20:13:48', NULL);
+INSERT INTO `article` VALUES (1421560981443575847, '这是张三的第七篇文章', NULL, 4, '2021-08-01 03:58:44', NULL);
 
 -- ----------------------------
 -- Table structure for bookmark
@@ -166,7 +166,7 @@ CREATE TABLE `follow`  (
 INSERT INTO `follow` VALUES (8, 1, 4);
 INSERT INTO `follow` VALUES (9, 2, 4);
 INSERT INTO `follow` VALUES (10, 3, 4);
-INSERT INTO `follow` VALUES (1414103357890494517, 4, 1);
+INSERT INTO `follow` VALUES (14141033578904945, 4, 1);
 INSERT INTO `follow` VALUES (2, 4, 2);
 INSERT INTO `follow` VALUES (3, 4, 3);
 INSERT INTO `follow` VALUES (7, 4, 6);
@@ -221,8 +221,8 @@ CREATE TABLE `like`  (
   `user_id` bigint(20) UNSIGNED NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uk_articleId_userId`(`article_id`, `user_id`) USING BTREE,
-  INDEX `idx_user_id`(`user_id`) USING BTREE,
-  UNIQUE INDEX `uk_commentId_userId`(`comment_id`, `user_id`) USING BTREE
+  UNIQUE INDEX `uk_commentId_userId`(`comment_id`, `user_id`) USING BTREE,
+  INDEX `idx_user_id`(`user_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
