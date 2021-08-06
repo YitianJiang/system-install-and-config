@@ -2,15 +2,15 @@
 version: '3'
 services:
   leaf-server:
-  image: registry.cn-hangzhou.aliyuncs.com/jiangyitian/aliyun-docker-image-registry:circle-leaf-server-1.0.1
-  container_name: leaf-server
-  restart: always
-  ports:
-    - 9090:9090
-  volumes:
-    - /etc/localtime:/etc/localtime
-  environment:
-    - 'TZ="Asia/Shanghai"'
+    image: registry.cn-hangzhou.aliyuncs.com/jiangyitian/aliyun-docker-image-registry:circle-leaf-server-1.0.1
+    container_name: leaf-server
+    restart: always
+    ports:
+      - 9090:9090
+    volumes:
+      - /etc/localtime:/etc/localtime
+    environment:
+      - 'TZ="Asia/Shanghai"'
 
   circle-main:
     image: registry.cn-hangzhou.aliyuncs.com/jiangyitian/aliyun-docker-image-registry:circle-main-1.0.3-SNAPSHOT
