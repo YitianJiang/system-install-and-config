@@ -72,7 +72,8 @@ docker exec -i mysql /bin/bash << EOF  2>&1 | grep ERROR
 mysql -uroot -proot --default-character-set=utf8 << END
 #创建远程访问用户
 grant all privileges on *.* to 'reader' @'%' identified by '123456';
-#创建circle数据库
+#创建数据库
+drop database if exists circle;
 create database circle character set utf8;
 #使用circle数据库
 use circle;
