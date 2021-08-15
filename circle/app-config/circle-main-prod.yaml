@@ -38,6 +38,15 @@ redis:
     authCode: 90 # 验证码超期时间
     common: 86400 # 24小时
 
+aliyun:
+  sts:
+    EndPoint: sts.aliyuncs.com
+    AccessKeyID: LTAI5tHCwix34d4Parpy5HA6 # 访问身份验证中用到用户标识
+    AccessKeySecret: yuLTJgFIaGFWmrYj8PfpsW2T0xuHJJ # 用户用于加密签名字符串和oss用来验证签名字符串的密钥
+    RoleArn: acs:ram::1366284796191670:role/oss-access-role
+    PolicyFile: policy/bucket_write_policy.txt
+    TokenExpireTime: 30
+
 feign:
   okhttp:
     enabled: true
