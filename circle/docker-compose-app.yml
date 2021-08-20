@@ -12,6 +12,15 @@ services:
     environment:
       - 'TZ="Asia/Shanghai"'
 
+  nacos-registry:
+    image: nacos/nacos-server:1.3.0
+    container_name: nacos-registry
+    restart: always    
+    environment:
+      - "MODE=standalone"
+    ports:
+      - 8848:8848
+
   circle-main:
     image: registry.cn-hangzhou.aliyuncs.com/jiangyitian/aliyun-docker-image-registry:circle-main-1.0.3-SNAPSHOT
     container_name: circle-main
@@ -25,6 +34,7 @@ services:
       - 'TZ="Asia/Shanghai"'
     depends_on:
       - leaf-server #circle-main在leaf-server之后启动
+      - nacos-registry 
 
   circle-auth:
     image: registry.cn-hangzhou.aliyuncs.com/jiangyitian/aliyun-docker-image-registry:circle-auth-1.0.0-SNAPSHOT
@@ -37,6 +47,8 @@ services:
       - /etc/localtime:/etc/localtime
     environment:
       - 'TZ="Asia/Shanghai"'
+    depends_on:
+      - nacos-registry 
 
   circle-gateway:
     image: registry.cn-hangzhou.aliyuncs.com/jiangyitian/aliyun-docker-image-registry:circle-gateway-1.0.0-SNAPSHOT
@@ -49,3 +61,5 @@ services:
       - /etc/localtime:/etc/localtime
     environment:
       - 'TZ="Asia/Shanghai"'
+    depends_on:
+      - nacos-registry 
