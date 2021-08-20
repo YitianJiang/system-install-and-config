@@ -49,18 +49,6 @@ elasticsearch-plugin install -b https://github.com/medcl/elasticsearch-analysis-
 EOF
 docker restart elasticsearch
 
-#配置文件上传nacos
-set +e
-filelist=$(find $SYSTEM_INSTALL_AND_CONFIG/circle/app-config -name *.yaml)
-for file in $filelist
-do
-    #urlencode "#" and "&", or encoding problem will emerge 
-    filestr=$(< $file)
-    filestr=${filestr//#/%23}
-    filestr=${filestr//&/%26}
-    curl -X POST 'http://127.0.0.1:8848/nacos/v1/cs/configs' \
-    -d 'dataId='"$(basename $file)"'&group=DEFAULT_GROUP&content='"$filestr"'&type=yaml'
-done
 
 #配置mysql
 cp $SYSTEM_INSTALL_AND_CONFIG/circle/circle.sql /mydata/circle.sql
@@ -93,3 +81,16 @@ done
 ####################################################安装启动应用###################################################################
 docker login --username=jiangyitian123456  -p jiang123456 registry.cn-hangzhou.aliyuncs.com
 docker-compose -f $SYSTEM_INSTALL_AND_CONFIG/circle/docker-compose-app.yml up -d
+
+#配置文件上传nacos
+set +e
+filelist=$(find $SYSTEM_INSTALL_AND_CONFIG/circle/app-config -name *.yaml)
+for file in $filelist
+do
+    #urlencode "#" and "&", or encoding problem will emerge 
+    filestr=$(< $file)
+    filestr=${filestr//#/%23}
+    filestr=${filestr//&/%26}
+    curl -X POST 'http://127.0.0.1:8848/nacos/v1/cs/configs' \
+    -d 'dataId='"$(basename $file)"'&group=DEFAULT_GROUP&content='"$filestr"'&type=yaml'
+done
