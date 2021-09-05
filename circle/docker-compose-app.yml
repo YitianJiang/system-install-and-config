@@ -49,15 +49,3 @@ services:
       - /etc/localtime:/etc/localtime
     environment:
       - 'TZ="Asia/Shanghai"'
-
-  circle-search:
-    image: registry.cn-hangzhou.aliyuncs.com/jiangyitian/aliyun-docker-image-registry:circle-search-1.0.0-SNAPSHOT
-    container_name: circle-search
-    restart: always
-    ports:
-      - 8081:8081
-    volumes:
-      - /mydata/app/circle-search/logs:/var/logs
-      - /etc/localtime:/etc/localtime
-    environment:
-      - 'TZ="Asia/Shanghai"'
