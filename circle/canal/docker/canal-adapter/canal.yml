@@ -1,0 +1,47 @@
+dataSourceKey: defaultDS
+destination: example
+groupId: g1
+outerAdapterKey: es-user
+esMapping:
+  _index: jdbc
+  _id: _id
+  relations:
+    customer_order:
+      name: customer
+  sql: "select t.id as _id, t.text, t.video_url, t.user_id, t.create_time, t.logo_url from article t"
+  etlCondition: "where t.c_time>={}"
+  commitBatch: 3000
+
+
+#{
+#  "mappings":{
+#    "_doc":{
+#      "properties":{
+#        "id": {
+#          "type": "long"
+#        },
+#        "name": {
+#          "type": "text"
+#        },
+#        "email": {
+#          "type": "text"
+#        },
+#        "order_id": {
+#          "type": "long"
+#        },
+#        "order_serial": {
+#          "type": "text"
+#        },
+#        "order_time": {
+#          "type": "date"
+#        },
+#        "customer_order":{
+#          "type":"join",
+#          "relations":{
+#            "customer":"order"
+#          }
+#        }
+#      }
+#    }
+#  }
+#}
