@@ -1,3 +1,4 @@
+source /etc/profile
 if [[ `go version | grep go` == "" ]];then
   echo "please install go"
   exit 1
