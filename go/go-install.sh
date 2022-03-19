@@ -14,3 +14,9 @@ echo "export PATH=$PATH:/usr/local/go/bin" >> /etc/profile
 source /etc/profile
 # 查看版本
 go version
+
+#安装delve
+git clone https://github.com/go-delve/delve.git
+cd delve
+go install github.com/go-delve/delve/cmd/dlv
+dlv version
